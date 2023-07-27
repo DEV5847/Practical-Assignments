@@ -1,0 +1,60 @@
+<!DOCTYPE html >
+<html>
+
+<head>
+    <style>
+        .mainContainer {
+            border: 3px solid black;
+            border-radius: 10px;
+            background-color: rgba(165, 150, 150, 0.785);
+            width: 70%;
+            padding: 10px;
+            display: flex;
+            margin: 20px auto;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <script language="javascript">
+        /*
+                                                        There are four main Web Socket API events −
+                                                            - Open
+                                                            - Message
+                                                            - Close
+                                                            - Error
+
+                                                        Each of the events are handled by implementing the functions like onopen, onmessage, onclose and onerror functions respectively. It can also be implemented with the help of addEventListener method.
+
+                                                        Actions
+                                                        	-send() //to send  messages, which includes text files,   binary data or images.
+                                                        	- close() //terminates connection
+                                                        */
+
+        var ws = new WebSocket('ws://localhost:8080');
+
+        ws.addEventListener("message", function(e) {
+            var msg = e.data;
+            document.getElementById('chatlog').innerHTML += '<br>Server: ' + msg;
+        });
+
+        function sendMessage() {
+            var message = document.getElementById('message').value;
+            document.getElementById('chatlog').innerHTML += '<br> Me: ' + message;
+            ws.send(message);
+            document.getElementById('message').value = "";
+        }
+    </script>
+    <div class="mainContainer">
+        <h2>Your Chat</h2>
+        <div id="chatlog" class="chats"></div>
+        <div class="inputContainer">
+            <input type="text" id="message" placeholder="Ask me a question" />
+            <input type="button" id="b1" onclick="sendMessage()" value="send" />
+        </div>
+    </div>
+
+</body>
+
+</html>
